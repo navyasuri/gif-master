@@ -8,11 +8,13 @@ def home_page():
 
 @app.route('/create')
 def show_another():
-    return render_template("create.html")
+    # return render_template("create.html")
+    return "Create page"
 
 @app.route('/join')
 def join_another():
-    return render_template("join.html")
+    # return render_template("join.html")
+    return "Join page"
 
-@app.route('/')
-    return render_template()
+# @app.route('/')
+#     return render_template()
