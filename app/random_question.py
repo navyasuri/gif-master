@@ -19,6 +19,8 @@ def get_keywords(sentence):
     r = rake_nltk.Rake()
     r.extract_keywords_from_text(sentence)
     allkeys = list(zip(*r.get_ranked_phrases_with_scores()))
+    if len(allkeys[1])<2:
+        return (allkeys[1][0], 'random') 
     return allkeys[1][:2]
 
 
