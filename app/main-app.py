@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, url_for
-import os
+import os, random_question
 app = Flask(__name__)
 
 users = dict()
@@ -17,6 +17,11 @@ def show_another():
 def join_another():
     return render_template("join.html")
     # return "Join page"
+@app.route('/prompt')
+def prompt_page():
+    ret = random_question.pick_random()
+    ret += random_question.get_keywords(ret)
+    return random_question.pick_random()
 
 # @app.route('/')
 #     return render_template()
