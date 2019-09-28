@@ -17,11 +17,12 @@ def show_another():
 def join_another():
     return render_template("join.html")
     # return "Join page"
+    
 @app.route('/prompt')
 def prompt_page():
     ret = random_question.pick_random()
-    ret += random_question.get_keywords(ret)
-    return random_question.pick_random()
+    ret += str(random_question.get_keywords(ret))
+    return ret
 
 # @app.route('/')
 #     return render_template()

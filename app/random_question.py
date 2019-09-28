@@ -11,7 +11,7 @@ def parse_questions():
 
 def pick_random():
     l = list()
-    with open('utils/questions.txt') as f:
+    with open('questions.txt') as f:
         l = f.readlines()
         return l[random.randint(0,len(l)-1)].strip()
 
