@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, url_for
-import os, random_question, secret, requests, json, random
+from flask_socketio import SocketIO, emit
+import os, random_question, secret, requests, json, random, string
 app = Flask(__name__)
 
 url_embed = '''<iframe src="{url}" width="480" height="288" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><br>'''
@@ -13,11 +14,14 @@ def home_page():
 
 @app.route('/create')
 def show_another():
-    return render_template("create.html")
+    charset = string.ascii_uppercase
+    randomcode = random.sample(charset, 8)
+    return render_template("create.html", code=randomcode)
     # return "Create page"
 
 @app.route('/join')
 def join_another():
+    request.form.get('code')
     return render_template("join.html")
     # return "Join page"
 
