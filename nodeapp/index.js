@@ -44,6 +44,11 @@ io.on('connection', (socket) => {
         }
         console.log("all conns", io.sockets.adapter.rooms)
     })
+
+    socket.on("startGame", (code) => {
+        console.log("starting game")
+        io.in(code).emit("startGame")
+    })
 })
 
 function makeid(length) {
