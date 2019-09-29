@@ -45,10 +45,10 @@ io.on('connection', (socket) => {
     })
 
     socket.on("joinExisting", (code) => {
-        console.log("existing")
         console.log("userRooms", userRooms)
         console.log("code", code)
         if (code in userRooms){
+            console.log("existing")
             socket.join(code, () => console.log(socket.rooms))
         }
         console.log("all conns", io.sockets.adapter.rooms)
