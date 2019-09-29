@@ -68,18 +68,30 @@ app.get('/create', (req, res) => {
     res.render('create')
 })
 
-app.get('/sharecode', (req, res) =>{
+
+app.get('/sharecode', (req, res) => {
     res.render('sharecode')
+})
 app.get('/load_all', (req, res) => {
     res.render('load_all')
+})
+app.get('/vote_all', (req, res) =>{
+    res.render('vote_all')
 })
 
 app.get('/waiting', (req, res) => {
     res.render('waiting')
 })
+app.get('/waitingselection', (req,res)=>{
+    res.render('waitingselection')
+})
+
+app.get('/waitingvote', (req,res)=>{
+    res.render('waitingvote')
+})
 
 io.on('connection', (socket) => {
-    
+
     console.log("connection socket")
 
     socket.on("joinRoom", (code) => {
@@ -92,16 +104,16 @@ io.on('connection', (socket) => {
     socket.on("joinExisting", (code) => {
         console.log("userRooms", userRooms)
         console.log("code", code)
-        if (code in userRooms){
+        if (code in userRooms) {
             console.log("existing")
             socket.join(code, () => console.log("rooms after joinExist", socket.rooms))
-            if ("connected" in userRooms[code]){
+            if ("connected" in userRooms[code]) {
                 userRooms[code]["connected"].add(socket.id)
             }
-            else{
+            else {
                 userRooms[code]["connected"] = [socket.id]
             }
-            
+
         }
         console.log("all conns", io.sockets.adapter.rooms)
     })
@@ -113,5 +125,4 @@ io.on('connection', (socket) => {
 
         // socket.to(code).emit("startClientGame")
     })
-})
 })

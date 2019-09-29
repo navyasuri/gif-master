@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://getbootstrap.com/docs/4.1/examples/sign-in/ -->
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="./Signin Template for Bootstrap_files/logo.png">
+
+    <title>Signin Template for Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/sign-in/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="./Signin Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./Signin Template for Bootstrap_files/signin.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+</head>
+
+<body class="text-center">
+    <form class="form-signin">
+        <img class="mb-4" src="https://media.giphy.com/media/l49JZ1oF2qHawdmzm/giphy.gif" alt="" width="72"
+            height="100">
+        <h1 class="h3 mb-3 font-weight-normal">Waiting for selection</h1>
+
+    </form>
+
+    <script>
+
+        const socket = io()
+        console.log("JELOO")
+        socket.on("connect", () => {
+            console.log("Sock connect")
+        })
+
+        socket.on("startClientGame", () => {
+            console.log("Start client game now")
+            location.href = "/load_all"
+        })
+
+    </script>
+
+</body>
+
+</html>
