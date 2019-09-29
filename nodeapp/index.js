@@ -96,7 +96,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on("startGame", (code) => {
-        console.log("starting game")
-        io.in(code).emit("startClientGame")
+        console.log("starting game", code)
+        console.log(io.sockets.rooms)
+        io.in(code).emit("startClientGame", "start")
+        // socket.to(code).emit("startClientGame")
     })
 })
