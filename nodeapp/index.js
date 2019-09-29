@@ -11,6 +11,7 @@ const URL = "https://api.giphy.com/v1/gifs/search"
 app.set("view engine", 'html')
 app.engine('html', require('hbs').__express)
 app.set('views', './html')
+app.use(express.static(__dirname + '/html'));
 
 const userRooms = {};
 const name = '';
@@ -67,6 +68,14 @@ app.get('/create', (req, res) => {
     res.render('create')
 })
 
+app.get('/load_all', (req, res) => {
+    res.render('load_all')
+})
+
+app.get('/waiting', (req, res) => {
+    res.render('waiting')
+})
+
 io.on('connection', (socket) => {
     console.log("connection socket")
     socket.on("joinRoom", (code) => {
@@ -88,7 +97,7 @@ io.on('connection', (socket) => {
 
     socket.on("startGame", (code) => {
         console.log("starting game")
-        io.in(code).emit("startGame")
+        io.in(code).emit("startClientGame")
     })
 })
 

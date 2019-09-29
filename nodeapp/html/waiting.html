@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Waiting for Game to Start</title>
+</head>
+<body>
+<h1>Waiting For Game to Start</h1>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script>
+function startJoiner(){
+    const socket = io()
+    socket.on("startClientGame"){
+        location.href="/load_all"
+    }
+}
+
+</script>
+</html>
