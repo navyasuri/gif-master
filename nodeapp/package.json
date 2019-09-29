@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "format-unicorn": "^1.1.1",
     "hbs": "^4.0.5",
     "retext-keywords": "^5.0.0",
     "socket.io": "^2.3.0",
