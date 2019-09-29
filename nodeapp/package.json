@@ -11,15 +11,11 @@
   "dependencies": {
     "express": "^4.17.1",
     "hbs": "^4.0.5",
-<<<<<<< HEAD
     "retext-keywords": "^5.0.0",
     "socket.io": "^2.3.0",
     "superagent": "^5.1.0"
-=======
-    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.2"
->>>>>>> c577b5b81a316ef798670ce4148ef44673c7389a
   }
 }
