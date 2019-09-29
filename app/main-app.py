@@ -31,13 +31,19 @@ def join_another():
     return render_template("join.html")
     # return "Join page"
 
-# @app.route('/creator_wait')
-# def creator_ready():
-    
+@app.route('/creator_wait')
+def creator_ready():
+    return render_template("creator_waiting.html")
 
-# @app.route('/player_ready')
-# def 
+@app.route('/load_all')
+def load_all_players():
 
+    return ""    
+
+@app.route('/joiner_ready', methods=['POST'])
+def joiner_ready():
+    request.form.get('')
+    return "Waiting for others"
 
 @app.route('/prompt')
 def prompt_page():
