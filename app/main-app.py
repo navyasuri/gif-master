@@ -1,13 +1,20 @@
 from flask import Flask, request, render_template, url_for
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room
 import os, random_question, secret, requests, json, random, string
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'socketsecretgifkey'
+socketio = SocketIO(app)
 
-url_embed = '''<iframe src="{url}" width="480" height="288" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><br>'''
+
+url_embed = '''<img src="{url}" width="480" height="288" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><br>'''
 
 users = dict()
 URL= "https://api.giphy.com/v1/gifs/search"
 
+def update_client_join(usercode):
+    room = users['usercode']['room']
+    emit('redirect', room=room)
+    
 @app.route('/')
 def home_page(): 
     return render_template("home.html") 
@@ -15,15 +22,22 @@ def home_page():
 @app.route('/create')
 def show_another():
     charset = string.ascii_uppercase
-    randomcode = random.sample(charset, 8)
+    randomcode = "".join(random.sample(charset, 8))
     return render_template("create.html", code=randomcode)
     # return "Create page"
 
 @app.route('/join')
 def join_another():
-    request.form.get('code')
     return render_template("join.html")
     # return "Join page"
+
+# @app.route('/creator_wait')
+# def creator_ready():
+    
+
+# @app.route('/player_ready')
+# def 
+
 
 @app.route('/prompt')
 def prompt_page():
@@ -63,3 +77,6 @@ def prompt_page():
 
 # @app.route('/')
 #     return render_template()
+
+if __name__=='__main__':
+    socketio.run(app)
