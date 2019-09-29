@@ -68,6 +68,8 @@ app.get('/create', (req, res) => {
     res.render('create')
 })
 
+app.get('/sharecode', (req, res) =>{
+    res.render('sharecode')
 app.get('/load_all', (req, res) => {
     res.render('load_all')
 })
