@@ -12,9 +12,9 @@
 <script>
 function startJoiner(){
     const socket = io()
-    socket.on("startClientGame"){
+    socket.on("joinRoom", (code) => {
         location.href="/load_all"
-    }
+    });
 }
 
 </script>
