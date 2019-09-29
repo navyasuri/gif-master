@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8419236-af9e-4f78-92b9-1879ff1226af" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodeapp/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/nodeapp/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodeapp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodeapp/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodeapp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/nodeapp/package.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,8 +17,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/nodeapp/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="50" column="35" lean-forward="true" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
+            <state relative-caret-position="2002">
+              <caret line="91" column="35" selection-start-line="91" selection-start-column="35" selection-end-line="91" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -220,7 +221,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569747422457</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="&quot;existing&quot; disambiguation">
+      <created>1569747771307</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1569747771307</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -270,7 +278,8 @@
     <MESSAGE value="making redirects for game start" />
     <MESSAGE value="merge conflict resolution" />
     <MESSAGE value="routing" />
-    <option name="LAST_COMMIT_MESSAGE" value="routing" />
+    <MESSAGE value="&quot;existing&quot; disambiguation" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;existing&quot; disambiguation" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/main-app.py">
@@ -355,8 +364,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/nodeapp/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="50" column="35" lean-forward="true" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
+        <state relative-caret-position="2002">
+          <caret line="91" column="35" selection-start-line="91" selection-start-column="35" selection-end-line="91" selection-end-column="35" />
         </state>
       </provider>
     </entry>
