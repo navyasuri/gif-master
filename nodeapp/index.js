@@ -8,6 +8,7 @@ const path = require("path");
 app.set("view engine", 'html')
 app.engine('html', require('hbs').__express)
 app.set('views', './html')
+app.use(express.static(__dirname + '/html'));
 
 var userRooms = {};
 var name = '';
@@ -24,14 +25,6 @@ app.get('/join', (req, res) => {
 
 app.get('/create', (req, res) => {
     res.render('create')
-})
-
-app.get('/load_all', (req, res) => {
-    res.render('load_all')
-})
-
-app.get('/waiting', (req, res) => {
-    res.render('waiting')
 })
 
 io.on('connection', (socket) => {
@@ -55,7 +48,7 @@ io.on('connection', (socket) => {
 
     socket.on("startGame", (code) => {
         console.log("starting game")
-        io.in(code).emit("startClientGame")
+        io.in(code).emit("startGame")
     })
 })
 
