@@ -84,7 +84,7 @@ io.on('connection', (socket) => {
         console.log("joinRoom")
         userRooms[code] = {}
         console.log("userRooms", userRooms)
-        socket.join(code, () => console.log(socket.rooms))
+        socket.join(code, () => console.log("new user", socket.rooms))
     })
 
     socket.on("joinExisting", (code) => {
@@ -92,14 +92,21 @@ io.on('connection', (socket) => {
         console.log("code", code)
         if (code in userRooms){
             console.log("existing")
-            socket.join(code, () => console.log(socket.rooms))
+            socket.join(code, () => console.log("rooms after joinExist", socket.rooms))
+            if ("connected" in userRooms[code]){
+                userRooms[code]["connected"].add(socket.id)
+            }
+            else{
+                userRooms[code]["connected"] = [socket.id]
+            }
+            
         }
         console.log("all conns", io.sockets.adapter.rooms)
     })
 
     socket.on("startGame", (code) => {
         console.log("starting game", code)
-        console.log(io.sockets.rooms)
+        console.log(socket.rooms)
         io.in(code).emit("startClientGame", "start")
         // socket.to(code).emit("startClientGame")
     })
