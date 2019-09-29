@@ -17,7 +17,6 @@ def update_client_join(usercode):
     room = user_rooms['usercode']['room']
     emit('redirect', room=room)
 
-
 @app.route('/')
 def home_page():
     return render_template("home.html")
