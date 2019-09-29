@@ -89,7 +89,8 @@ app.get('/sharecode', (req, res) => {
 })
 app.get('/load_all', (req, res) => {
 
-    let carouselBuilder = []
+    res.render("load_all")
+    /*let carouselBuilder = []
 
     superagent.get(RANDOMWORDS).end((err, res) => {
         if (err) { return console.log(err) }
@@ -119,7 +120,7 @@ app.get('/load_all', (req, res) => {
                 res.render('load_all', carousel=carouselBuilder)
             });
 
-    })
+    })*/
 
 })
 app.get('/vote_all', (req, res) =>{

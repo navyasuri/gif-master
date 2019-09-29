@@ -42,3 +42,13 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+a{
+  text-decoration: none !important;
+  color: white !important;
+}
+
+a:hover{
+  text-decoration: none !important;
+  color: white !important;
+}
