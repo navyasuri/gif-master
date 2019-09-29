@@ -7,6 +7,7 @@ const path = require("path");
 const fs = require('fs')
 const superagent = require('superagent')
 const URL = "https://api.giphy.com/v1/gifs/search"
+const formatUnicorn = require('format-unicorn')
 
 app.set("view engine", 'html')
 app.engine('html', require('hbs').__express)
@@ -15,6 +16,12 @@ app.use(express.static(__dirname + '/html'));
 
 const userRooms = {};
 const name = '';
+
+let GIFURL = "https://media.giphy.com/media/{id}/giphy.gif"
+
+let GIFBOX = `<div class="item active">
+<img src="https://media.giphy.com/media/{id}/giphy.gif" alt="Los Angeles"  style="width:100%;height:25em;">
+</div>`
 
 const listOfQuestions = createQuestionList()
 
@@ -79,7 +86,7 @@ app.get('/waiting', (req, res) => {
 })
 
 io.on('connection', (socket) => {
-    
+
     console.log("connection socket")
 
     socket.on("joinRoom", (code) => {
@@ -109,8 +116,9 @@ io.on('connection', (socket) => {
     socket.on("startGame", (code) => {
         console.log("starting game", code)
         console.log(socket.rooms)
-        io.sockets.in(code).emit("startClientGame")
-
+        // io.in(code).emit("startClientGame")
+        io.emit('startClientGame')
+        // io.emit('an event sent to all connected clients');
         // socket.to(code).emit("startClientGame")
     })
 })
