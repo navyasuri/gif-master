@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <!-- saved from url=(0051)https://getbootstrap.com/docs/4.1/examples/sign-in/ -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -21,26 +24,27 @@
 
 <body class="text-center">
     <form class="form-signin">
-      <img class="mb-4" src="https://media.giphy.com/media/l49JZ1oF2qHawdmzm/giphy.gif" alt="" width="72" height="100">
-      <h1 class="h3 mb-3 font-weight-normal">Waiting for game to start</h1>
+        <img class="mb-4" src="https://media.giphy.com/media/l49JZ1oF2qHawdmzm/giphy.gif" alt="" width="72"
+            height="100">
+        <h1 class="h3 mb-3 font-weight-normal">Waiting for game to start</h1>
 
     </form>
-  
+
+    <script>
+
+        const socket = io()
+        console.log("JELOO")
+        socket.on("connect", () => {
+            console.log("Sock connect")
+        })
+
+        socket.on("startClientGame", (data) => {
+            console.log("Start client game now", data)
+            location.href = "/load_all"
+        })
+
+    </script>
 
 </body>
-<script>
-
-    const socket = io()
-    console.log("JELOO")
-    socket.on("connect", () => {
-        console.log("Sock connect")
-    })
-
-    socket.on("startClientGame", (data) => {
-        console.log("Start client game now", data)
-        location.href = "/load_all"
-    })
-
-</script>
 
 </html>
