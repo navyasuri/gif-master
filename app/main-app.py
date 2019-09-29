@@ -9,7 +9,7 @@ socketio = SocketIO(app)
 url_embed = '''<img src="{url}" width="480" height="288" frameBorder="0" 
 class="giphy-embed" allowFullScreen></iframe><br>'''
 
-user_rooms = {}      # format {roomkey, room object}
+room_data = {}      # format {roomkey, room object}
 URL = "https://api.giphy.com/v1/gifs/search"
 
 
@@ -26,9 +26,7 @@ def home_page():
 def show_another():
     charset = string.ascii_uppercase
     randomcode = "".join(random.sample(charset, 8))
-    room_obj = randomcode
-    user_rooms[randomcode] = room_obj         # here is where we create the room
-    join_room(room_obj)
+    room_data[randomcode] = None
     return render_template("create.html", code=randomcode)
     # return "Create page"
 
@@ -53,9 +51,10 @@ def load_all_players():
 @app.route('/joiner_ready', methods=['POST'])       # where the joiners wait
 def joiner_ready():
     key = request.form.get("room_key")
-    if user_rooms and user_rooms[key]:
+    if key in room_data:
         room_obj = user_rooms[key]
         join_room(room_obj)
+        print("Successful join")
         return "Waiting for others"
     else:
         return "no room with that code"

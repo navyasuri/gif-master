@@ -1,8 +1,24 @@
-{% extends 'base.html'%}
-{% block content %}
-
 <h1>Create</h1>
 
-<h2> your code is {{code}}</h2>
+<h2 id="codeHolder"> </h2>
 
-{% endblock %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script> 
+
+function makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+const code = makeid(8)
+
+document.getElementById("codeHolder").innerHTML = "Your code is "+code
+const socket = io()
+socket.emit("joinRoom", code)
+
+</script>
