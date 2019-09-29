@@ -27,6 +27,10 @@ app.get('/create', (req, res) => {
     res.render('create')
 })
 
+app.get('/sharecode', (req, res) =>{
+    res.render('sharecode')
+})
+
 io.on('connection', (socket) => {
     console.log("connection socket")
     socket.on("joinRoom", (code) => {

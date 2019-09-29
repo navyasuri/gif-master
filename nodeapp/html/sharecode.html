@@ -21,18 +21,33 @@
   <body class="text-center">
     <form class="form-signin">
       <img class="mb-4" src="./Signin Template for Bootstrap_files/logo.png" alt="" width="72" height="72">
-      <h1 class="h3 mb-3 font-weight-normal">Enter GIF room info</h1>
-      <label for="inputName" class="sr-only">Name</label>
-      <input type="text" id="inputName" class="form-control" placeholder="Your Name" required="" autofocus="">
-      <br>
-      <label for="inputCode" class="sr-only">Code</label>
-      <input type="text" id="inputCode" class="form-control" placeholder="Code" required="" autofocus="">
-      <br>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Next</button>
+      <h1 class="h3 mb-3 font-weight-normal">Share Code:</h1>
+      <h1 id="codeHolder"class="h5 mb-5 font-weight-normal"></h1>
+      <input type="button" class="btn btn-lg btn-primary btn-block" onclick="" value ="Start">
+
       <p class="mt-5 mb-3 text-muted">© HackNY 2019</p>
 
     </form>
-  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script> 
+
+    function makeid(length) {
+      var result = '';
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      var charactersLength = characters.length;
+      for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    }
+
+    const code = makeid(8)
+
+    document.getElementById("codeHolder").innerHTML = "Your code is: "+code
+    const socket = io()
+    socket.emit("joinRoom", code)
+  </script>
+
 
 </body>
 </html>
