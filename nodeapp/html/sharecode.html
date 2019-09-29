@@ -1,35 +1,43 @@
 <!DOCTYPE html>
 <!-- saved from url=(0051)https://getbootstrap.com/docs/4.1/examples/sign-in/ -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="./Signin Template for Bootstrap_files/logo.png">
+<html lang="en">
 
-    <title>Signin Template for Bootstrap</title>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/sign-in/">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="./Signin Template for Bootstrap_files/logo.png">
 
-    <!-- Bootstrap core CSS -->
-    <link href="./Signin Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
+  <title>Signin Template for Bootstrap</title>
 
-    <!-- Custom styles for this template -->
-    <link href="./Signin Template for Bootstrap_files/signin.css" rel="stylesheet">
-  </head>
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/sign-in/">
 
-  <body class="text-center">
-    <form class="form-signin">
-      <img class="mb-4" src="./Signin Template for Bootstrap_files/logo.png" alt="" width="72" height="72">
-      <h1 class="h3 mb-3 font-weight-normal">Share Code:</h1>
-      <h1 id="codeHolder"class="h5 mb-5 font-weight-normal"></h1>
-      <input type="button" class="btn btn-lg btn-primary btn-block" onclick="" value ="Start">
+  <!-- Bootstrap core CSS -->
+  <link href="./Signin Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
 
-      <p class="mt-5 mb-3 text-muted">© HackNY 2019</p>
+  <!-- Custom styles for this template -->
+  <link href="./Signin Template for Bootstrap_files/signin.css" rel="stylesheet">
+</head>
 
-    </form>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-    <script> 
+<body class="text-center">
+  <form class="form-signin">
+    <img class="mb-4" src="./Signin Template for Bootstrap_files/logo.png" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Share Code:</h1>
+    <h1 id="codeHolder" class="h5 mb-5 font-weight-normal"></h1>
+    <input type="button" class="btn btn-lg btn-primary btn-block" onclick="startCreator()" value="Start">
+
+    <p class="mt-5 mb-3 text-muted">© HackNY 2019</p>
+
+  </form>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+  <script>
+
+    function startCreator() {
+      socket.emit('startGame', code)
+      location.href = "/load_all"
+    }
 
     function makeid(length) {
       var result = '';
@@ -43,11 +51,12 @@
 
     const code = makeid(8)
 
-    document.getElementById("codeHolder").innerHTML = "Your code is: "+code
+    document.getElementById("codeHolder").innerHTML = "Your code is: " + code
     const socket = io()
     socket.emit("joinRoom", code)
   </script>
 
 
 </body>
+
 </html>

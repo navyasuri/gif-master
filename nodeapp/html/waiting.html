@@ -16,7 +16,8 @@
 
     <!-- Custom styles for this template -->
     <link href="./Signin Template for Bootstrap_files/signin.css" rel="stylesheet">
-  </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+</head>
 
 <body class="text-center">
     <form class="form-signin">
@@ -27,19 +28,19 @@
   
 
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 <script>
-    
-const socket = io()
-console.log("JELOO")
-socket.on("connect", () => {
-    console.log("Sock connect")
-})
 
-socket.on("startClientGame", (data)=>{
-    console.log("Start client game now", data)
-    location.href="/load_all"
-})
+    const socket = io()
+    console.log("JELOO")
+    socket.on("connect", () => {
+        console.log("Sock connect")
+    })
+
+    socket.on("startClientGame", (data) => {
+        console.log("Start client game now", data)
+        location.href = "/load_all"
+    })
 
 </script>
+
 </html>
