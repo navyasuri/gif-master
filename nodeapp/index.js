@@ -8,6 +8,7 @@ const path = require("path");
 app.set("view engine", 'html')
 app.engine('html', require('hbs').__express)
 app.set('views', './html')
+app.use(express.static(__dirname + '/html'));
 
 var userRooms = {};
 var name = '';
