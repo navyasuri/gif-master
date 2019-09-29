@@ -15,7 +15,7 @@
 <script>
 
 function startCreator(){
-    socket.emit('startGame')
+    socket.emit('startGame', code)
     location.href="/load_all"
 }
 </script>

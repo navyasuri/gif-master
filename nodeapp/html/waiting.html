@@ -12,10 +12,15 @@
 <script>
     
 const socket = io()
-socket.on("startClientGame", () => {
-    console.log("Start client game now")
+console.log("JELOO")
+socket.on("connect", () => {
+    console.log("Sock connect")
+})
+
+socket.on("startClientGame", (data)=>{
+    console.log("Start client game now", data)
     location.href="/load_all"
-});
+})
 
 </script>
 </html>
