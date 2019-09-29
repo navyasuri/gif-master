@@ -19,25 +19,23 @@ def update_client_join(usercode):
 
 
 @app.route('/')
-def home_page(): 
-    return render_template("home.html") 
+def home_page():
+    return render_template("home.html")
 
 
-@socketio.on('join')        # i dont know what this does, just placeholder
 @app.route('/create')
-def show_another(data):
+def show_another():
     charset = string.ascii_uppercase
     randomcode = "".join(random.sample(charset, 8))
-    user_rooms[randomcode] = data['room']          # here is where we create the room
+    room_obj = randomcode
+    user_rooms[randomcode] = room_obj         # here is where we create the room
+    join_room(room_obj)
     return render_template("create.html", code=randomcode)
     # return "Create page"
 
 
-@app.route('/join')                      # where the user joins a room
+@app.route('/join')                      # decision (join/create) page
 def join_another():
-    key = request.form.get("room_key")
-    room_obj = user_rooms[key]
-    join_room(room_obj)
     return render_template("join.html")
     # return "Join page"
 
@@ -55,8 +53,13 @@ def load_all_players():
 
 @app.route('/joiner_ready', methods=['POST'])       # where the joiners wait
 def joiner_ready():
-    request.form.get('')
-    return "Waiting for others"
+    key = request.form.get("room_key")
+    if user_rooms and user_rooms[key]:
+        room_obj = user_rooms[key]
+        join_room(room_obj)
+        return "Waiting for others"
+    else:
+        return "no room with that code"
 
 
 @app.route('/prompt')
@@ -84,7 +87,7 @@ def prompt_page():
         }
     )
 
-    if res1.status_code!=200 or res2.status_code!=200:
+    if res1.status_code != 200 or res2.status_code != 200:
         print(res1.text, res2.text)
         return "error"
     data1 = json.loads(res1.text)
