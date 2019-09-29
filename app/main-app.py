@@ -6,44 +6,60 @@ app.config['SECRET_KEY'] = 'socketsecretgifkey'
 socketio = SocketIO(app)
 
 
-url_embed = '''<img src="{url}" width="480" height="288" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><br>'''
+url_embed = '''<img src="{url}" width="480" height="288" frameBorder="0" 
+class="giphy-embed" allowFullScreen></iframe><br>'''
 
-users = dict()
-URL= "https://api.giphy.com/v1/gifs/search"
+user_rooms = {}      # format {roomkey, room object}
+URL = "https://api.giphy.com/v1/gifs/search"
+
 
 def update_client_join(usercode):
-    room = users['usercode']['room']
+    room = user_rooms['usercode']['room']
     emit('redirect', room=room)
-    
+
 @app.route('/')
-def home_page(): 
-    return render_template("home.html") 
+def home_page():
+    return render_template("home.html")
+
 
 @app.route('/create')
 def show_another():
     charset = string.ascii_uppercase
     randomcode = "".join(random.sample(charset, 8))
+    room_obj = randomcode
+    user_rooms[randomcode] = room_obj         # here is where we create the room
+    join_room(room_obj)
     return render_template("create.html", code=randomcode)
     # return "Create page"
 
-@app.route('/join')
+
+@app.route('/join')                      # decision (join/create) page
 def join_another():
     return render_template("join.html")
     # return "Join page"
 
+
 @app.route('/creator_wait')
 def creator_ready():
     return render_template("creator_waiting.html")
+
 
 @app.route('/load_all')
 def load_all_players():
 
     return ""    
 
-@app.route('/joiner_ready', methods=['POST'])
+
+@app.route('/joiner_ready', methods=['POST'])       # where the joiners wait
 def joiner_ready():
-    request.form.get('')
-    return "Waiting for others"
+    key = request.form.get("room_key")
+    if user_rooms and user_rooms[key]:
+        room_obj = user_rooms[key]
+        join_room(room_obj)
+        return "Waiting for others"
+    else:
+        return "no room with that code"
+
 
 @app.route('/prompt')
 def prompt_page():
@@ -70,7 +86,7 @@ def prompt_page():
         }
     )
 
-    if res1.status_code!=200 or res2.status_code!=200:
+    if res1.status_code != 200 or res2.status_code != 200:
         print(res1.text, res2.text)
         return "error"
     data1 = json.loads(res1.text)
@@ -84,5 +100,6 @@ def prompt_page():
 # @app.route('/')
 #     return render_template()
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     socketio.run(app)
