@@ -8,7 +8,7 @@ socketio = SocketIO(app)
 
 url_embed = '''<img src="{url}" width="480" height="288" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><br>'''
 
-users = dict()
+users = {}      # format {roomkey, room object}
 URL= "https://api.giphy.com/v1/gifs/search"
 
 def update_client_join(usercode):
@@ -26,7 +26,7 @@ def show_another():
     return render_template("create.html", code=randomcode)
     # return "Create page"
 
-@app.route('/join')
+@app.route('/join')            # where the user joins a room
 def join_another():
     return render_template("join.html")
     # return "Join page"
@@ -40,7 +40,7 @@ def load_all_players():
 
     return ""    
 
-@app.route('/joiner_ready', methods=['POST'])
+@app.route('/joiner_ready', methods=['POST'])       # where the joiners wait
 def joiner_ready():
     request.form.get('')
     return "Waiting for others"
