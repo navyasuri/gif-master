@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "hbs": "^4.0.5",
-    "socket.io": "^2.3.0"
+    "retext-keywords": "^5.0.0",
+    "socket.io": "^2.3.0",
+    "superagent": "^5.1.0"
   }
 }
