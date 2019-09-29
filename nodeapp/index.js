@@ -8,7 +8,7 @@ const fs = require('fs')
 const superagent = require('superagent')
 const URL = "https://api.giphy.com/v1/gifs/search"
 const formatUnicorn = require('format-unicorn')
-const secret = require("./secret")
+//const secret = require("./secret")
 
 app.set("view engine", 'html')
 app.engine('html', require('hbs').__express)
@@ -135,6 +135,15 @@ app.get('/waitingselection', (req,res)=>{
 
 app.get('/waitingvote', (req,res)=>{
     res.render('waitingvote')
+})
+
+app.get('/winnerround', (req,res)=>{
+
+    res.render("winnerround")
+})
+
+app.get('/winner',(req,res)=>{
+    res.render("winner")
 })
 
 io.on('connection', (socket) => {
