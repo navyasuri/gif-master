@@ -38,9 +38,9 @@
     <script>
     const socket = io();
     function sendCode(){
-      socket.emit("joinExisting", String(document.querySelector("#room_key").value))
-    // window.location.replace("/waiting")
-    }   
+        socket.emit("joinExisting", String(document.querySelector("#room_key").value))
+        location.href="/waiting"
+    }
     </script>
 
 </body>
