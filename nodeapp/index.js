@@ -79,7 +79,9 @@ app.get('/waiting', (req, res) => {
 })
 
 io.on('connection', (socket) => {
+    
     console.log("connection socket")
+
     socket.on("joinRoom", (code) => {
         console.log("joinRoom")
         userRooms[code] = {}
@@ -107,7 +109,8 @@ io.on('connection', (socket) => {
     socket.on("startGame", (code) => {
         console.log("starting game", code)
         console.log(socket.rooms)
-        io.in(code).emit("startClientGame", "start")
+        io.sockets.in(code).emit("startClientGame")
+
         // socket.to(code).emit("startClientGame")
     })
 })

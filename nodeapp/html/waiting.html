@@ -38,8 +38,8 @@
             console.log("Sock connect")
         })
 
-        socket.on("startClientGame", (data) => {
-            console.log("Start client game now", data)
+        socket.on("startClientGame", () => {
+            console.log("Start client game now")
             location.href = "/load_all"
         })
 
