@@ -4,15 +4,56 @@ const app = express();
 const server = app.listen(9000);
 const io = socketIO(server);
 const path = require("path");
+const fs = require('fs')
+const superagent = require('superagent')
+const URL = "https://api.giphy.com/v1/gifs/search"
 
 app.set("view engine", 'html')
 app.engine('html', require('hbs').__express)
 app.set('views', './html')
 app.use(express.static(__dirname + '/html'));
 
-var userRooms = {};
-var name = '';
+const userRooms = {};
+const name = '';
 
+const listOfQuestions = createQuestionList()
+
+function createQuestionList() {
+    return fs.readFileSync(path.join(__dirname, "questions.txt"), { encoding: 'utf-8' }).split('\n')
+}
+
+function getRandomQuestion(listOfQuestions) {
+    return listOfQuestions[Math.floor(Math.random() * items.length)];
+}
+
+async function apiBuilder(keywords) {
+    if (keywords.length == 1) {
+        keywords.add("None")
+    }
+
+    let carouselBuilder = []
+
+    superagent.get(URL)
+        .query({ api_key: 'DEMO_KEY', q: keywords[0], limit: 40 })
+        .end((err, res) => {
+            if (err) { return console.log(err); }
+            console.log(res.body.url);
+            console.log(res.body.explanation);
+            carouselBuilder.add(res.body.explanation.data.embed_url)
+        });
+
+    superagent.get(URL)
+        .query({ api_key: 'DEMO_KEY', q: keywords[1], limit: 40 })
+        .end((err, res) => {
+            if (err) { return console.log(err); }
+            console.log(res.body.url);
+            console.log(res.body.explanation);
+            carouselBuilder.add(res.body.explanation.data.embed_url)
+        });
+
+    return carouselBuilder;
+
+}
 
 app.get('/', (req, res) => {
     res.render('home')
@@ -29,6 +70,12 @@ app.get('/create', (req, res) => {
 
 app.get('/sharecode', (req, res) =>{
     res.render('sharecode')
+app.get('/load_all', (req, res) => {
+    res.render('load_all')
+})
+
+app.get('/waiting', (req, res) => {
+    res.render('waiting')
 })
 
 io.on('connection', (socket) => {
@@ -41,10 +88,10 @@ io.on('connection', (socket) => {
     })
 
     socket.on("joinExisting", (code) => {
-        console.log("existing")
         console.log("userRooms", userRooms)
         console.log("code", code)
         if (code in userRooms){
+            console.log("existing")
             socket.join(code, () => console.log(socket.rooms))
         }
         console.log("all conns", io.sockets.adapter.rooms)
@@ -52,45 +99,6 @@ io.on('connection', (socket) => {
 
     socket.on("startGame", (code) => {
         console.log("starting game")
-        io.in(code).emit("startGame")
+        io.in(code).emit("startClientGame")
     })
 })
-
-function makeid(length) {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
-
-// app.get('/:name', function(req, res){
-//     name = req.params.name;
-//     res.sendFile(path.join(__dirname, "/index.html"));
-// });
-
-// // socket
-// io.sockets.on("connection", function(socket){
-//     users[socket.id] = name;
-//     // node
-//     socket.on("nRoom", function(room){
-//         socket.join(room);
-//         socket.broadcast.in(room).emit("node new user", users[socket.id] + " new user has joined");
-//     });
-
-//     socket.on("node new message", function(data){
-//         io.sockets.in("nRoom").emit('node news', users[socket.id] + ": "+ data);
-//     });
-
-//     // python
-//     socket.on("pRoom", function(room){
-//         socket.join(room);
-//         socket.broadcast.in(room).emit("python new user", users[socket.id] + " new user has joined");
-//     });
-
-//     socket.on("python new message", function(data){
-//         io.sockets.in("pRoom").emit('python news', users[socket.id] + ": "+ data);
-//     });
-// });

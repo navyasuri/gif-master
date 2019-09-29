@@ -11,7 +11,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "hbs": "^4.0.5",
-    "socket.io": "^2.3.0"
+    "retext-keywords": "^5.0.0",
+    "socket.io": "^2.3.0",
+    "superagent": "^5.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.2"
