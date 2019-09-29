@@ -8,6 +8,7 @@ const fs = require('fs')
 const superagent = require('superagent')
 const URL = "https://api.giphy.com/v1/gifs/search"
 const formatUnicorn = require('format-unicorn')
+const secret = require("./secret")
 
 app.set("view engine", 'html')
 app.engine('html', require('hbs').__express)
@@ -19,7 +20,9 @@ const name = '';
 
 let GIFURL = "https://media.giphy.com/media/{id}/giphy.gif"
 
-let GIFBOX = `<div class="item active">
+let RANDOMWORDS = "https://random-word-api.herokuapp.com/word?key=T1IWGUGJ&number=2"
+
+let GIFBOX = `<div class="item">
 <img src="https://media.giphy.com/media/{id}/giphy.gif" alt="Los Angeles"  style="width:100%;height:25em;">
 </div>`
 
@@ -33,33 +36,38 @@ function getRandomQuestion(listOfQuestions) {
     return listOfQuestions[Math.floor(Math.random() * items.length)];
 }
 
-async function apiBuilder(keywords) {
-    if (keywords.length == 1) {
-        keywords.add("None")
-    }
+function apiBuilder(keywords) {
 
     let carouselBuilder = []
 
-    superagent.get(URL)
-        .query({ api_key: 'DEMO_KEY', q: keywords[0], limit: 40 })
-        .end((err, res) => {
-            if (err) { return console.log(err); }
-            console.log(res.body.url);
-            console.log(res.body.explanation);
-            carouselBuilder.add(res.body.explanation.data.embed_url)
-        });
+    superagent.get(RANDOMWORDS).end((err, res) => {
+        if (err) { return console.log(err) }
+        let key1 = res.body[0]
+        let key2 = res.body[1]
 
-    superagent.get(URL)
-        .query({ api_key: 'DEMO_KEY', q: keywords[1], limit: 40 })
-        .end((err, res) => {
-            if (err) { return console.log(err); }
-            console.log(res.body.url);
-            console.log(res.body.explanation);
-            carouselBuilder.add(res.body.explanation.data.embed_url)
-        });
+        superagent.get(URL)
+            .query({ api_key: secret.giphyKey(), q: key1, limit: 40 })
+            .end((err, res) => {
+                if (err) { return console.log(err); }
+                console.log(res.body.url);
+                console.log(res.body.explanation);
+                for (obj in res.body.data) {
+                    carouselBuilder.add(GIFBOX.formatUnicorn(obj.id))
+                }
+            });
 
-    return carouselBuilder;
+        superagent.get(URL)
+            .query({ api_key: secret.giphyKey(), q: key2, limit: 40 })
+            .end((err, res) => {
+                if (err) { return console.log(err); }
+                console.log(res.body.url);
+                console.log(res.body.explanation);
+                for (obj in res.body.data) {
+                    carouselBuilder.add(GIFBOX.formatUnicorn(obj.id))
+                }
+            });
 
+    })
 }
 
 app.get('/', (req, res) => {
@@ -75,10 +83,45 @@ app.get('/create', (req, res) => {
     res.render('create')
 })
 
-app.get('/sharecode', (req, res) =>{
+app.get('/sharecode', (req, res) => {
     res.render('sharecode')
+
+})
+
 app.get('/load_all', (req, res) => {
-    res.render('load_all')
+
+    let carouselBuilder = []
+
+    superagent.get(RANDOMWORDS).end((err, res) => {
+        if (err) { return console.log(err) }
+        let key1 = res.body[0]
+        let key2 = res.body[1]
+
+        superagent.get(URL)
+            .query({ api_key: secret.giphyKey(), q: key1, limit: 40 })
+            .end((err, res) => {
+                if (err) { return console.log(err); }
+                console.log(res.body.url);
+                console.log(res.body.explanation);
+                for (obj in res.body.data){
+                    carouselBuilder.add(GIFBOX.formatUnicorn(obj.id))
+                }
+            });
+
+        superagent.get(URL)
+            .query({ api_key: secret.giphyKey(), q: key2, limit: 40 })
+            .end((err, res) => {
+                if (err) { return console.log(err); }
+                console.log(res.body.url);
+                console.log(res.body.explanation);
+                for (obj in res.body.data){
+                    carouselBuilder.add(GIFBOX.formatUnicorn(obj.id))
+                }
+                res.render('load_all', carousel=carouselBuilder)
+            });
+
+    })
+
 })
 
 app.get('/waiting', (req, res) => {
@@ -99,16 +142,16 @@ io.on('connection', (socket) => {
     socket.on("joinExisting", (code) => {
         console.log("userRooms", userRooms)
         console.log("code", code)
-        if (code in userRooms){
+        if (code in userRooms) {
             console.log("existing")
             socket.join(code, () => console.log("rooms after joinExist", socket.rooms))
-            if ("connected" in userRooms[code]){
+            if ("connected" in userRooms[code]) {
                 userRooms[code]["connected"].add(socket.id)
             }
-            else{
+            else {
                 userRooms[code]["connected"] = [socket.id]
             }
-            
+
         }
         console.log("all conns", io.sockets.adapter.rooms)
     })
@@ -121,5 +164,4 @@ io.on('connection', (socket) => {
         // io.emit('an event sent to all connected clients');
         // socket.to(code).emit("startClientGame")
     })
-})
 })
