@@ -5,25 +5,50 @@ const server = app.listen(9000);
 const io = socketIO(server);
 const path = require("path");
 
-var user_rooms = [];
+app.set("view engine", 'html')
+app.engine('html', require('hbs').__express)
+app.set('views', './html')
+
+var userRooms = {};
 var name = '';
 
+
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, "/html/home.html"))
+    res.render('home')
 })
 
 app.get('/join', (req, res) => {
-    res.sendFile(path.join(__dirname, "/html/join.html"))
+
+    res.render('join')
 })
 
 app.get('/create', (req, res) => {
-    var code = makeid(8);
-    res.sendFile(path.join(__dirname, "/html/create.html"))
+    res.render('create')
+})
+
+io.on('connection', (socket) => {
+    console.log("connection socket")
+    socket.on("joinRoom", (code) => {
+        console.log("joinRoom")
+        userRooms[code] = {}
+        console.log("userRooms", userRooms)
+        socket.join(code, () => console.log(socket.rooms))
+    })
+
+    socket.on("joinExisting", (code) => {
+        console.log("existing")
+        console.log("userRooms", userRooms)
+        console.log("code", code)
+        if (code in userRooms){
+            socket.join(code, () => console.log(socket.rooms))
+        }
+        console.log("all conns", io.sockets.adapter.rooms)
+    })
 })
 
 function makeid(length) {
     var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     var charactersLength = characters.length;
     for (var i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));

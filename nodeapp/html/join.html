@@ -1,10 +1,13 @@
-{% extends 'base.html'%}
-{% block content %}
-
 <h1>Join</h1>
 
-<form action="/joiner_ready" method="POST">
-<input type="text" name="room_key">
-<input type="submit">
-</form>
-{% endblock %}
+<input type="text" name="room_key" id="room_key">
+<button onclick="sendCode()">Join</button>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script>
+const socket = io();
+function sendCode(){
+    socket.emit("joinExisting", String(document.querySelector("#room_key").value))
+}
+</script>
